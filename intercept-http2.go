@@ -19,6 +19,7 @@ func main() {
 	flag.Parse()
 
 	interceptor := intercept.NewPacketInterceptor(*device, int32(*snaplen), *promiscuous, *timeout)
+	defer interceptor.Close()
 
 	for packet := range interceptor.Packets() {
 		if packet.IsIPv4 {
